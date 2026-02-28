@@ -9,6 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ai-sdk/amazon-bedrock": "^4.0.69",
+    "@browserbasehq/stagehand": "^3.1.0",
+    "stagehand": "^1.0.1",
+    "tsx": "^4.21.0",
     "vue": "^3.5.25"
   },
   "devDependencies": {
