@@ -3,39 +3,86 @@ import { ref } from 'vue'
 
 defineProps<{ msg: string }>()
 
-const count = ref(0)
+const sessionId = ref('')
+const postHogApiKey = ref('')
+const submitted = ref(false)
+
+function handleSubmit() {
+  console.log('Session ID:', sessionId.value)
+  console.log('PostHog API Key:', postHogApiKey.value)
+  submitted.value = true
+}
 </script>
 
 <template>
   <h1>{{ msg }}</h1>
 
   <div class="card">
-    <button type="button" @click="count++">count is {{ count }}</button>
-    <p>
-      Edit
-      <code>components/HelloWorld.vue</code> to test HMR
-    </p>
-  </div>
+    <form @submit.prevent="handleSubmit">
+      <div class="field">
+        <label for="session-id">Session ID</label>
+        <input
+          id="session-id"
+          v-model="sessionId"
+          type="text"
+          placeholder="Enter session ID"
+        />
+      </div>
+      <div class="field">
+        <label for="posthog-key">PostHog API Key</label>
+        <input
+          id="posthog-key"
+          v-model="postHogApiKey"
+          type="text"
+          placeholder="Enter PostHog API key"
+        />
+      </div>
+      <button type="submit">Submit</button>
+    </form>
 
-  <p>
-    Check out
-    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
-      >create-vue</a
-    >, the official Vue + Vite starter
-  </p>
-  <p>
-    Learn more about IDE Support for Vue in the
-    <a
-      href="https://vuejs.org/guide/scaling-up/tooling.html#ide-support"
-      target="_blank"
-      >Vue Docs Scaling up Guide</a
-    >.
-  </p>
-  <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
+    <div v-if="submitted" class="output">
+      <p><strong>Session ID:</strong> {{ sessionId }}</p>
+      <p><strong>PostHog API Key:</strong> {{ postHogApiKey }}</p>
+    </div>
+  </div>
 </template>
 
 <style scoped>
-.read-the-docs {
-  color: #888;
+.card {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.field label {
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+
+.field input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+button[type="submit"] {
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.output {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: #f4f4f4;
+  border-radius: 4px;
+  text-align: left;
 }
 </style>
