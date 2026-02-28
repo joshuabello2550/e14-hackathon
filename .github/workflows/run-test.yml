@@ -15,14 +15,26 @@ jobs:
           node-version: '20'  # Use Node 20 so Web Streams (TransformStream) are available
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Install Playwright browsers and OS dependencies
-        # Stagehand uses Playwright / puppeteer under the hood; install the browsers
-        # and required OS deps so a local browser can be launched in CI.
-        run: npx playwright install --with-deps
+      - name: Install Playwright and OS dependencies
+        # Stagehand uses Playwright / puppeteer under the hood; ensure Playwright
+        # is available, install the browser binaries and the OS deps that CI needs.
+        run: |
+          # Install Playwright so npx playwright references a known package version
+          npm install --no-audit --no-fund --save-dev playwright@latest
+          # Install browsers and required OS deps
+          npx playwright@latest install --with-deps
 
-      - name: Run TypeScript tests
+      - name: Install Xvfb (for extra compatibility)
+        # xvfb helps in some CI environments where sandboxing / displays cause
+        # browsers to exit early and so produce connection refused errors.
+        run: sudo apt-get update && sudo apt-get install -y xvfb
+
+      - name: Run TypeScript tests (under Xvfb)
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}  # Use the secret
-        run: npx tsx example-workflow.ts
+          # Enable verbose Stagehand logging so we get more info in CI logs
+          DEBUG: "stagehand*,playwright*"
+        # Run the script under Xvfb; this avoids many sandbox/display issues.
+        run: xvfb-run --auto-servernum --server-args='-screen 0 1280x720x24' npx tsx example-workflow.ts
