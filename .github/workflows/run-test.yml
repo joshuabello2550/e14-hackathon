@@ -27,17 +27,17 @@ jobs:
           # Install Stagehand; adjust if needed based on your package
           npm install @browserbasehq/stagehand --save-dev
 
-      - name: Install Xvfb (for compatibility)
+      - name: Install system dependencies (Xvfb + browser libs)
         run: |
-          sudo apt-get update && sudo apt-get install -y xvfb
+          sudo apt-get update
+          sudo apt-get install -y xvfb chromium-browser libnss3 libatk1.0-0 \
+            libatk-bridge2.0-0 libcups2 libxcomposite1 libxdamage1 libxrandr2 \
+            libgbm1 libxss1 libasound2 fonts-liberation libx11-xcb1 libxtst6 \
+            libxinerama1 libgtk-3-0
 
-      - name: Run Xvfb and Stagehand tests
+      - name: Run Stagehand tests under Xvfb
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}  # Use the secret for the API Key
         run: |
-          # Start Xvfb
-          Xvfb :99 -ac &
-          export DISPLAY=:99
-
-          # Run the test script
-          node testStagehand.js
+          # Run the test script wrapped by xvfb-run to ensure a DISPLAY is available
+          xvfb-run -s "-screen 0 1280x1024x24" node testStagehand.js
