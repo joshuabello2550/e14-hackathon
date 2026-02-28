@@ -1,17 +1,26 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from "vue";
+import { getSessionEventsData } from "../api/sessionEventsData";
+import { onMounted } from "vue"
 
-defineProps<{ msg: string }>()
+defineProps<{ msg: string }>();
 
-const sessionId = ref('')
-const postHogApiKey = ref('')
-const submitted = ref(false)
+const sessionId = ref("");
+const postHogApiKey = ref("");
+const submitted = ref(false);
+const projectId = ref("");
 
 function handleSubmit() {
-  console.log('Session ID:', sessionId.value)
-  console.log('PostHog API Key:', postHogApiKey.value)
-  submitted.value = true
+  console.log("Session ID:", sessionId.value);
+  console.log("PostHog API Key:", postHogApiKey.value);
+  console.log("Project ID:", projectId.value);
+  submitted.value = true;
 }
+
+onMounted(async () => {
+  const data = await getSessionEventsData(sessionId.value, projectId.value, postHogApiKey.value)
+  console.log("Session Events Data:", data)
+})
 </script>
 
 <template>
@@ -35,6 +44,15 @@ function handleSubmit() {
           v-model="postHogApiKey"
           type="text"
           placeholder="Enter PostHog API key"
+        />
+      </div>
+       <div class="field">
+        <label for="project-id">Project Id</label>
+        <input
+          id="project-id"
+          v-model="projectId"
+          type="text"
+          placeholder="Enter Project ID"
         />
       </div>
       <button type="submit">Submit</button>
