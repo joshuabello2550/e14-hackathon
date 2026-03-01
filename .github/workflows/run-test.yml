@@ -1,0 +1,45 @@
+name: Stagehand Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'  # Use a suitable version for your project
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Stagehand and its dependencies
+        run: |
+          # Install Stagehand; adjust if needed based on your package
+          npm install @browserbasehq/stagehand --save-dev
+
+      - name: Install system dependencies (Xvfb + browser libs)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb chromium-browser libnss3 libatk1.0-0 \
+            libatk-bridge2.0-0 libcups2 libxcomposite1 libxdamage1 libxrandr2 \
+            libgbm1 libxss1 fonts-liberation libx11-xcb1 libxtst6 \
+            libxinerama1 libgtk-3-0
+
+      - name: Run Stagehand tests under Xvfb
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}  # Use the secret for the API Key
+        run: |
+          # Run the test script wrapped by xvfb-run to ensure a DISPLAY is available
+          for file in tests/*.js; do
+            xvfb-run -s "-screen 0 1280x1024x24" node "$file"
+          done
