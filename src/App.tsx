@@ -3,10 +3,11 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 
+const installationId = 113203245; // Replace with actual installation ID
+const owner = "joshuabello2550";
+const repo = "e14-hackathon";
+
 const createFile = async () => {
-  const installationId = 113203245; // Replace with actual installation ID
-  const owner = "joshuabello2550";
-  const repo = "e14-hackathon";
   const content = "Hello, this is a test file created by the GitHub App!";
 
   await fetch("http://localhost:3001/api/create-file", {

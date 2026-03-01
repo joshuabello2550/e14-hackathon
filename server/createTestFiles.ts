@@ -1,6 +1,7 @@
 import { Octokit } from "@octokit/rest";
 import { createAppAuth } from "@octokit/auth-app";
 import fs from "fs";
+import { createTestCase } from "./createTestCase";
 
 export const createFileWithGitHubApp = async ({
   installationId,
@@ -29,12 +30,13 @@ export const createFileWithGitHubApp = async ({
     },
   });
 
+  const testCase = createTestCase(content);
   await octokit.repos.createOrUpdateFileContents({
     owner,
     repo,
     path,
     message,
-    content: Buffer.from(content).toString("base64"),
+    content: Buffer.from(testCase).toString("base64"),
     branch: "main",
   });
 

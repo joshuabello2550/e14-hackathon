@@ -14,9 +14,9 @@ app.post("/api/create-file", async (req, res) => {
       installationId,
       owner,
       repo,
-      path: "tests/test.txt",
+      path: "tests/testStagehandLive.js",
       content,
-      message: "Auto commit",
+      message: "adding a testcase",
     });
 
     res.json({ success: true });
