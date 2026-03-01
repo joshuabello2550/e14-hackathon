@@ -41,7 +41,7 @@ const GenerateForm = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ installationId, owner, repo, content: code }),
     });
-    console.log("create file response: ", await res.json());
+    console.log("create file response: ", res);
     const { timestamp } = await res.json();
     setFileTimestamp(timestamp);
   };
