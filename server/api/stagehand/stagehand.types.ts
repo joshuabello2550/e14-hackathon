@@ -3,7 +3,7 @@ import type { SessionEvent } from "../posthog/posthog.types";
 /**
  * Stagehand action types
  */
-export type ActionType = "click" | "fill" | "select" | "navigate";
+export type ActionType = "click" | "fill" | "select" | "navigate" | "change";
 
 /**
  * Structured action for Stagehand

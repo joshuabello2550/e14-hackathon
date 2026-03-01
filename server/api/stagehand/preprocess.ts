@@ -48,6 +48,11 @@ export function isNoise(event: SessionEvent): boolean {
     return true;
   }
 
+  // set events
+  if (event.event === "$set" && !event.elements_html) {
+    return true;
+  }
+
   // Empty pageviews (just page loads)
   if (event.event === "$pageview" && !event.elements_html) {
     return true;

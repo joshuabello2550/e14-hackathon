@@ -45,7 +45,7 @@ export async function convertEventToAction(
       output: Output.object({
         schema: z.object({
           action: z
-            .enum(["click", "fill", "select", "navigate"])
+            .enum(["click", "fill", "select", "navigate", "change"])
             .describe("Type of action to perform"),
           target: z
             .string()
@@ -55,7 +55,7 @@ export async function convertEventToAction(
           value: z
             .string()
             .optional()
-            .describe("Value for fill/select actions"),
+            .describe("Value for fill/select/change actions"),
         }),
       }),
       prompt: `Analyze this event and convert it to a Stagehand action.
