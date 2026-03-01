@@ -33,8 +33,6 @@ export async function convertEventToAction(
   allEvents: SessionEvent[],
   config: ConverterConfig
 ): Promise<StagehandAction> {
-  console.log("convertEventToAction");
-
   // Get surrounding context (2 events before, 2 after)
   const contextStart = Math.max(0, eventIndex - 2);
   const contextEnd = Math.min(allEvents.length, eventIndex + 3);
@@ -89,7 +87,7 @@ Tasks:
       ...result.output,
       originalEventIndex: eventIndex,
     };
-    console.log("action: ", action);
+    // console.log("action: ", action);
 
     return action;
   } catch (error) {

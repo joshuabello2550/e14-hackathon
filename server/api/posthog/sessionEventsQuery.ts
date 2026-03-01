@@ -174,7 +174,6 @@ export async function getSessionEventsData(
   });
 
   const data = await response.json();
-  console.log("data: ", data);
 
   // 👇 ONLY CHANGE: map positional rows → typed objects
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -197,7 +196,7 @@ export async function getSessionEventsData(
       // distinct_id: row[10],
     };
   });
-  console.log("results: ", results);
+  // console.log("results: ", results);
 
   return results;
 }

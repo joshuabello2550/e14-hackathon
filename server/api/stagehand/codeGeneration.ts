@@ -107,21 +107,21 @@ export function generateStagehandCode(
 ): string {
   let code = "";
 
-  // Imports
-  code += generateImports();
-  code += "\n";
+  // // Imports
+  // code += generateImports();
+  // code += "\n";
 
-  // Main function
-  code += "export async function test() {\n";
-  code += "  try {\n";
+  // // Main function
+  // code += "export async function test() {\n";
+  // code += "  try {\n";
 
-  // Setup (indented)
-  const setup = generateSetup();
-  setup.split("\n").forEach((line) => {
-    if (line) {
-      code += `  ${line}\n`;
-    }
-  });
+  // // Setup (indented)
+  // const setup = generateSetup();
+  // setup.split("\n").forEach((line) => {
+  //   if (line) {
+  //     code += `  ${line}\n`;
+  //   }
+  // });
 
   // Test steps (indented)
   const steps = generateTestSteps(actions, initialUrl);
@@ -135,23 +135,23 @@ export function generateStagehandCode(
 
   code += "\n";
 
-  // Cleanup (indented)
-  const cleanup = generateCleanup();
-  cleanup.split("\n").forEach((line) => {
-    if (line) {
-      code += `    ${line}\n`;
-    }
-  });
+  // // Cleanup (indented)
+  // const cleanup = generateCleanup();
+  // cleanup.split("\n").forEach((line) => {
+  //   if (line) {
+  //     code += `    ${line}\n`;
+  //   }
+  // });
 
-  // Error handling
-  code += "  } catch (error) {\n";
-  code += '    console.error("❌ Test failed:", error);\n';
-  code += "    throw error;\n";
-  code += "  }\n";
-  code += "}\n\n";
+  // // Error handling
+  // code += "  } catch (error) {\n";
+  // code += '    console.error("❌ Test failed:", error);\n';
+  // code += "    throw error;\n";
+  // code += "  }\n";
+  // code += "}\n\n";
 
-  // Run the test
-  code += "test();\n";
+  // // Run the test
+  // code += "test();\n";
 
   return code;
 }

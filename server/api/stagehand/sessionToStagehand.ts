@@ -36,7 +36,10 @@ export async function sessionToStagehand(
   // ============================================
   // LAYER 2-3: AGENT ANALYSIS (LLM-Powered)
   // ============================================
-  const actions = await convertEventsToActions(preprocessed, fullConfig);
+  // TODO: Change
+  const actions = (
+    await convertEventsToActions(preprocessed, fullConfig)
+  ).slice(0, 5);
 
   // ============================================
   // LAYER 4: CODE GENERATION (Deterministic)

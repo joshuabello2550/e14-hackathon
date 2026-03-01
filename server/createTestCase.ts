@@ -6,5 +6,6 @@ export function createTestCase(innerTestCase: string): string {
     path.join(import.meta.dirname, "testTemplate.js"),
     "utf8"
   );
+  console.log("innerTestCase: ", innerTestCase);
   return template.replace("{{BODY}}", innerTestCase);
 }

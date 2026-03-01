@@ -3,7 +3,10 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 
-const BASE_URL = "http://localhost:3001";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const installationId = 113203245;
+const owner = "joshuabello2550";
+const repo = "e14-hackathon";
 
 const App = () => {
   const [sessionId, setSessionId] = useState(
@@ -35,12 +38,13 @@ const App = () => {
     const { code } = await stagehandRes.json();
     console.log("generated code: ", code);
 
-    // // Step 3: Create the file in GitHub
-    // await fetch(`${BASE_URL}/api/create-file`, {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({ content: code }),
-    // });
+    // Step 3: Create the file in GitHub
+    const res = await fetch(`${BASE_URL}/api/create-file`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ installationId, owner, repo, content: code }),
+    });
+    console.log("create file response: ", await res.json());
   };
 
   return (

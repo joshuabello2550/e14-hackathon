@@ -19,7 +19,6 @@ export const createFileWithGitHubApp = async ({
   message: string;
 }) => {
   const privateKey = fs.readFileSync("github-app-private-key.pem", "utf8");
-  console.log("process.env.GITHUB_APP_ID", process.env.GITHUB_APP_ID);
 
   const octokit = new Octokit({
     authStrategy: createAppAuth,

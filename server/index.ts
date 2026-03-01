@@ -16,7 +16,7 @@ app.post("/api/create-file", async (req, res) => {
       installationId,
       owner,
       repo,
-      path: "tests/testStagehandLive.js",
+      path: `tests/testStagehand-${Date.now()}.js`,
       content,
       message: "adding a testcase",
     });
