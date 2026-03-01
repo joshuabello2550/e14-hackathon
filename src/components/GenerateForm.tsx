@@ -10,6 +10,7 @@ const GenerateForm = () => {
     "idle" | "generating" | "success" | "error"
   >("idle");
 
+  // CORE LOGIC: Generate test case and push to GitHub
   const generateTestCase = async () => {
     const BASE_URL = import.meta.env.VITE_API_BASE_URL;
     const installationId = 113203245;
