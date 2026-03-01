@@ -12,16 +12,17 @@ app.post("/api/create-file", async (req, res) => {
   const { installationId, owner, repo, content } = req.body;
 
   try {
+    const timestamp = Date.now();
     await createFileWithGitHubApp({
       installationId,
       owner,
       repo,
-      path: `tests/testStagehand-${Date.now()}.js`,
+      path: `tests/testStagehand-${timestamp}.js`,
       content,
       message: "adding a testcase",
     });
 
-    res.json({ success: true });
+    res.json({ success: true, timestamp });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error(error);

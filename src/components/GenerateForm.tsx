@@ -9,6 +9,7 @@ const GenerateForm = () => {
   const [status, setStatus] = useState<
     "idle" | "generating" | "success" | "error"
   >("idle");
+  const [fileTimestamp, setFileTimestamp] = useState<number | null>(null);
 
   // CORE LOGIC: Generate test case and push to GitHub
   const generateTestCase = async () => {
@@ -41,6 +42,8 @@ const GenerateForm = () => {
       body: JSON.stringify({ installationId, owner, repo, content: code }),
     });
     console.log("create file response: ", await res.json());
+    const { timestamp } = await res.json();
+    setFileTimestamp(timestamp);
   };
 
   const handleGenerate = async (e: React.FormEvent) => {
@@ -156,7 +159,7 @@ const GenerateForm = () => {
                 <p className="mt-1 text-xs text-muted-foreground">
                   Your test has been pushed to{" "}
                   <code className="rounded bg-secondary px-1.5 py-0.5 font-mono text-primary">
-                    tests/session_{sessionId.slice(0, 8)}.spec.ts
+                    tests/testStagehand-{fileTimestamp}.js
                   </code>
                 </p>
               </div>
