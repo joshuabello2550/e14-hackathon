@@ -1,10 +1,23 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0)
+const createFile = async () => {
+  const installationId = 113203245; // Replace with actual installation ID
+  const owner = "joshuabello2550";
+  const repo = "e14-hackathon";
+  const content = "Hello, this is a test file created by the GitHub App!";
+
+  await fetch("http://localhost:3001/api/create-file", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ installationId, owner, repo, content }),
+  });
+};
+
+const App = () => {
+  const [count, setCount] = useState(0);
 
   return (
     <>
@@ -18,7 +31,12 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
+        <button
+          onClick={() => {
+            setCount((count) => count + 1);
+            createFile();
+          }}
+        >
           count is {count}
         </button>
         <p>
@@ -29,7 +47,7 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
