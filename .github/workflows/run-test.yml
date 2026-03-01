@@ -17,7 +17,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'  # Use a suitable version for your project
+          node-version: "20" # Use a suitable version for your project
 
       - name: Install dependencies
         run: npm ci
@@ -35,9 +35,15 @@ jobs:
             libgbm1 libxss1 fonts-liberation libx11-xcb1 libxtst6 \
             libxinerama1 libgtk-3-0
 
+      - name: Start dev server
+        run: npm run dev &
+
+      - name: Wait for dev server
+        run: npx wait-on http://localhost:5173 --timeout 30000
+
       - name: Run Stagehand tests under Xvfb
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}  # Use the secret for the API Key
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }} # Use the secret for the API Key
         run: |
           # Run the test script wrapped by xvfb-run to ensure a DISPLAY is available
           for file in tests/*.js; do
