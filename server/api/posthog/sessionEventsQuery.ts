@@ -1,4 +1,4 @@
-import type { ElementType, SessionEvent } from "./types";
+import type { ElementType, SessionEvent } from "./posthog.types";
 
 export function chainToElements(
   chain: string,

@@ -9,10 +9,10 @@ import App from "./App.jsx";
 //   defaults: "2026-01-30",
 // } as const;
 
-console.log(
-  "import.meta.env.VITE_PUBLIC_POSTHOG_PROJECT_TOKEN: ",
-  import.meta.env.VITE_PUBLIC_POSTHOG_PROJECT_TOKEN
-);
+// console.log(
+//   "import.meta.env.VITE_PUBLIC_POSTHOG_PROJECT_TOKEN: ",
+//   import.meta.env.VITE_PUBLIC_POSTHOG_PROJECT_TOKEN
+// );
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     {/* <PostHogProvider
